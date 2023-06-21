@@ -66,6 +66,6 @@ class EmployeeController extends Controller
     {
         // ELOQUENT
         Employee::find($id)->delete();
-            return redirect()->route('employees.index');
+        return redirect()->route('employees.index');
     }
 }
