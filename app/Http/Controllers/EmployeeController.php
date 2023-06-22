@@ -24,7 +24,8 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        //
+        $pageTitle = 'Create Employee';
+        return view('employee.create', compact('pageTitle'));
     }
 
     /**
@@ -33,7 +34,7 @@ class EmployeeController extends Controller
     public function store(Request $request)
     {
         //
-    }
+    }   
 
     /**
      * Display the specified resource.
