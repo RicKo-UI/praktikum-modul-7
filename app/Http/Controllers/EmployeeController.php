@@ -26,6 +26,8 @@ class EmployeeController extends Controller
     public function create()
     {
         $pageTitle = 'Create Employee';
+
+        return view('employee.create', compact('pageTitle'));
         // ELOQUENT
         $positions = Position::all();
         return view('employee.create', compact('pageTitle', 'positions'));
@@ -36,6 +38,10 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
+
+        //
+    }   
+
         $messages = [
             'required' => ':Attribute harus diisi.',
             'email' => 'Isi :attribute dengan format yang benar',
@@ -60,6 +66,7 @@ class EmployeeController extends Controller
         $employee->save();
         return redirect()->route('employees.index');
     }
+
 
     /**
      * Display the specified resource.
