@@ -27,8 +27,6 @@ class EmployeeController extends Controller
     {
         $pageTitle = 'Create Employee';
 
-        return view('employee.create', compact('pageTitle'));
-        // ELOQUENT
         $positions = Position::all();
         return view('employee.create', compact('pageTitle', 'positions'));
     }
@@ -38,9 +36,6 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-
-        //
-    }   
 
         $messages = [
             'required' => ':Attribute harus diisi.',
@@ -74,7 +69,6 @@ class EmployeeController extends Controller
     public function show(string $id)
     {
         $pageTitle = 'Employee Detail';
-        // ELOQUENT
         $employee = Employee::find($id);
         return view('employee.show', compact('pageTitle', 'employee'));
     }

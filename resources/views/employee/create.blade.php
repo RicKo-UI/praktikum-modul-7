@@ -29,19 +29,15 @@ initial-scale=1.0">
 
                     <li class="nav-item col-2 col-md-auto"><a href="{{ route('home') }}" class="nav-link">Home</a></li>
 
-                    <li class="nav-item col-2 col-md-auto"><a href="" class="nav-link">Home</a></li>
+                    <li class="nav-item col-2 col-md-auto"><a href="{{ route('home') }}" class="nav-link">Home</a></li>
 
                     <li class="nav-item col-2 col-md-auto"><a href="{{ route('employees.index') }}"
                             class="nav-link">Employee List</a></li>
                 </ul>
                 <hr class="d-lg-none text-white-50">
 
-                <a href="{{ route('profile') }}" class="btn
-
-                <a href="" class="btn
-
-btn-outline-light my-2 ms-md-auto"><i
-                        class="bi-person-circle me-1"></i>
+                <a href="{{ route('profile') }}" class="btn btn-primary">
+                <a href="{{ route('home') }}" class="btn btn-outline-light my-2 ms-md-auto"><i class="bi-person-circle me-1"></i>
                     My Profile</a>
             </div>
         </div>
