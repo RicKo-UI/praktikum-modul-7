@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Employee;
 use App\Models\Position;
+use Illuminate\Support\Facades\Validator;
 
 class EmployeeController extends Controller
 {
@@ -13,10 +14,10 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $pageTitle = 'Employee List';  
-        $employees = Employee::all(); 
-        
-        return view('employee.index', [ 'pageTitle' => $pageTitle, 'employees' => $employees ]);
+        $pageTitle = 'Employee List';
+        $employees = Employee::all();
+
+        return view('employee.index', ['pageTitle' => $pageTitle, 'employees' => $employees]);
     }
 
     /**
@@ -25,7 +26,11 @@ class EmployeeController extends Controller
     public function create()
     {
         $pageTitle = 'Create Employee';
+
         return view('employee.create', compact('pageTitle'));
+        // ELOQUENT
+        $positions = Position::all();
+        return view('employee.create', compact('pageTitle', 'positions'));
     }
 
     /**
@@ -33,15 +38,45 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
+
         //
     }   
+
+        $messages = [
+            'required' => ':Attribute harus diisi.',
+            'email' => 'Isi :attribute dengan format yang benar',
+            'numeric' => 'Isi :attribute dengan angka'
+        ];
+        $validator = Validator::make($request->all(), [
+            'firstName' => 'required',
+            'lastName' => 'required',
+            'email' => 'required|email',
+            'age' => 'required|numeric',
+        ], $messages);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+        // ELOQUENT
+        $employee = new Employee;
+        $employee->firstname = $request->firstName;
+        $employee->lastname = $request->lastName;
+        $employee->email = $request->email;
+        $employee->age = $request->age;
+        $employee->position_id = $request->position;
+        $employee->save();
+        return redirect()->route('employees.index');
+    }
+
 
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
-        //
+        $pageTitle = 'Employee Detail';
+        // ELOQUENT
+        $employee = Employee::find($id);
+        return view('employee.show', compact('pageTitle', 'employee'));
     }
 
     /**
@@ -49,7 +84,11 @@ class EmployeeController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $pageTitle = 'Edit Employee';
+        $positions = Position::all();
+        $employee = Employee::find($id);
+
+        return view('employee.edit', compact('pageTitle', 'positions', 'employee'));
     }
 
     /**
@@ -57,7 +96,21 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $messages = [
+            'required' => ':Attribute harus diisi.', 'email' => 'Isi :attribute dengan format yang benar', 'numeric' => 'Isi :attribute dengan angka'
+        ];
+        $validator = Validator::make($request->all(), ['firstName' => 'required', 'lastName' => 'required', 'email' => 'required|email', 'age' => 'required|numeric',], $messages);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+        $employee = Employee::find($id);
+        $employee->firstname = $request->firstName;
+        $employee->lastname = $request->lastName;
+        $employee->email = $request->email;
+        $employee->age = $request->age;
+        $employee->position_id = $request->position;
+        $employee->save();
+        return redirect()->route('employees.index');
     }
 
     /**
@@ -65,6 +118,8 @@ class EmployeeController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        // ELOQUENT
+        Employee::find($id)->delete();
+        return redirect()->route('employees.index');
     }
 }
