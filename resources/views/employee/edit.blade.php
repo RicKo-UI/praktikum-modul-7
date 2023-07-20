@@ -22,7 +22,7 @@
         </div>
     </nav>
     <div class="container-sm mt-5">
-        <form action="{{ route('employees.update', ['employee' => $employee->id]) }}" method="POST"> @csrf @method('put') <div class="row justify-content-center">
+        <form action="{{ route('employees.update', ['employee' => $employee->id]) }}" method="POST" enctype="multipart/form-data"> @csrf @method('put') <div class="row justify-content-center">
                 <div class="p-5 bg-light rounded-3 col-xl-6">
                     <div class="mb-3 text-center"> <i class="bi-person-circle fs-1"></i>
                         <h4>Edit Employee</h4>
@@ -34,6 +34,11 @@
                         <div class="col-md-6 mb-3"> <label for="lastName" class="form-label">Last Name</label> <input class="form-control @error('lastName') is-invalid @enderror" type="text" name="lastName" id="lastName" value="{{ $errors->any() ? old('lastName') : $employee->lastname }}" placeholder="Enter Last Name">@error('lastName') <div class="text-danger"><small>{{ $message }}</small></div> @enderror </div>
                         <div class="col-md-6 mb-3"> <label for="email" class="form-label">Email</label> <input class="form-control @error('email') is-invalid @enderror" type="text" name="email" id="email" value="{{ $errors->any() ? old('email') : $employee->email }}" placeholder="Enter Email"> @error('email') <div class="text-danger"><small>{{ $message }}</small></div> @enderror </div>
                         <div class="col-md-6 mb-3"> <label for="age" class="form-label">Age</label><input class="form-control @error('age') is-invalid @enderror" type="text" name="age" id="age" value="{{ $errors->any() ? old('age') : $employee->age }}" placeholder="Enter Age"> @error('age') <div class="text-danger"><small>{{ $message }}</small></div> @enderror </div>
+                        <div class="col-md-12 mb-3">
+                            <label for="cv" class="form-label">Curriculum Vitae (CV)</label>
+                            <h5>{{ $employee->original_filename }}</h5>
+                            <input type="file" class="form-control" name="cv" id="cv" value="{{ $errors->any() ? old('cv') : $employee->original_filename }}">
+                        </div>
                         <div class="col-md-12 mb-3"> 
                             <label for="position" class="form-label">Position</label> 
                             <select name="position" id="position" class="form-select"> 
